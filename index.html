@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Average Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .input-field {
+            margin-bottom: 15px;
+        }
+        .input-field label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .input-field input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Average Calculator</h2>
+    <div class="input-field">
+        <label for="number">Enter how many numbers you want to average:</label>
+        <input type="number" id="count" placeholder="Enter a number">
+    </div>
+    <button class="btn" onclick="getNumbers()">Submit</button>
+    <div id="numberInputs"></div>
+    <button class="btn" onclick="calculateAverage()">Calculate Average</button>
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    function getNumbers() {
+        var countInput = document.getElementById('count');
+        var count = parseInt(countInput.value);
+        
+        var numberInputsDiv = document.getElementById('numberInputs');
+        numberInputsDiv.innerHTML = '';
+        
+        for (var i = 0; i < count; i++) {
+            var inputField = document.createElement('div');
+            inputField.className = 'input-field';
+            inputField.innerHTML = '<label for="number' + i + '">Enter number ' + (i+1) + ':</label>' +
+                                   '<input type="number" id="number' + i + '" placeholder="Enter number ' + (i+1) + '">';
+            numberInputsDiv.appendChild(inputField);
+        }
+    }
+    
+    function calculateAverage() {
+        var countInput = document.getElementById('count');
+        var count = parseInt(countInput.value);
+        
+        var total = 0;
+        var invalidInput = false;
+        
+        for (var i = 0; i < count; i++) {
+            var numberInput = document.getElementById('number' + i);
+            var number = parseFloat(numberInput.value);
+            
+            if (isNaN(number)) {
+                invalidInput = true;
+                break;
+            }
+            
+            total += number;
+        }
+        
+        if (!invalidInput) {
+            var average = total / count;
+            document.getElementById('result').innerHTML = "Average: " + average.toFixed(2);
+        } else {
+            alert("Please enter valid numbers for all inputs.");
+        }
+    }
+</script>
+
+</body>
+</html>
